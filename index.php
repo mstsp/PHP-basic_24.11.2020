@@ -1,43 +1,44 @@
 <?php
-    $string = 'Десять негритят пошли купаться в море';
-    echo "Получить остаток деления 7 на 3." . " Ответ: " . 7 % 3 . "\r\n";
-    echo "Получить целую часть сложения 7 и 7,15." . " Ответ: " . round(7 + 7.15) . "\r\n";
-    echo "Получить корень из 25." . " Ответ: " . sqrt(25) . "\r\n";
-    echo "Получить 4-е слово из фразы - Десять негритят пошли купаться в море" . " Ответ: " . explode(" ", $string)[3] . "\r\n";
-    echo "Получить 17-й символ из фразы - Десять негритят пошли купаться в море" . " Ответ: " . mb_substr($string, 16, 1) . "\r\n";
-    echo "Сделать заглавной первую букву во всех словах фразы - Десять негритят пошли купаться в море" . " Ответ: " . mb_convert_case($string, MB_CASE_TITLE, "UTF-8") . "\r\n";
-    echo "Посчитать длину строки  - Десять негритят пошли купаться в море" . " Ответ: " . mb_strlen($string) . "\r\n";
+// $arr = [1, 2, 3, 7, 31, 4, 1, 8, 6];
+// for($i = 0; $i < count($arr); $i++) {
+//    echo $arr[$i];
+// }
 
+    $array = [
+    'red' => 1,
+    'blue' => 2,
+    'green' => 3
+    ];
 
-    echo "Правильно ли утверждение true равно 1.";
-    if (true == 1) {
-        echo 'Да, правильно.' . "\r\n";
-    } else {
-        echo 'Нет.' . "\r\n";
+    foreach($array as $key => $value) {
+    echo 'key: '. $key . ';'  . 'value:'. $value . "\r\n";
     }
 
-    echo "Правильно ли утверждение false тождественно 0.";
-    if (false === 0) {
-        echo 'Да, правильно.' . "\r\n";
-    } else {
-        echo 'Нет.' . "\r\n";
-    }
+    $array2 = $array;
 
-    echo "Какая строка длиннее three - три.";
-    if (substr_compare("three", "три", 0) > 0) {
-        echo 'Ответ: строка three длиннее' . "\r\n";
-    } elseif (substr_compare("three", "три", 0) < 0) {
-        echo 'Ответ: строка три длиннее' . "\r\n";
-    } else {
-        echo 'Ответ: строки равны' . "\r\n";
-    }
+    $array['red'] = 3333;
 
-    echo "Какое число больше 125 умножить на 13 плюс 7 или 223 плюс 28 умножить 2.";
-    $number1 = 125 * 13 + 7;
-    $number2 = 223 + 28 * 2;
-    if ($number1 > $number2) {
-        echo 'Ответ: больше 125 умножить на 13 плюс 7' . "\r\n";
-    } else {
-        echo 'Ответ: больше число 223 плюс 28 умножить 2' . "\r\n";
-    }
+    var_export($array);
+    var_export($array2);
+
+
+    $arr1 = [1, 2, 3, 4, 5];
+    $arr2 = $arr1;
+
+    $arr2[3] = 545454;
+    var_export($arr1);
+    var_export($arr2);
+//
+//    $end = false;
+//    $current = 1;
+//    while(!$end) {
+//        if(empty($current)) {
+//            $end = true;
+//        } else {
+//            $current = array_pop($array);
+//            var_export($current);
+//        }
+//    }
+
+    var_export(array_merge($array, $arr1));
 ?>
