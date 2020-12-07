@@ -1,82 +1,102 @@
 <?php
-    $arr = [1, 2, 3, 7, 31, 4, 1, 8, 6];
+<?php
+//Создать функцию определяющую какой тип данных ей передан и выводящей соответствующее сообщение, если данные не переданы то вывести соответствующее сообщение.
 
-    echo 'Посчитать длину массива. ' . 'Ответ: ' . count($arr) . "\r\n";
+$value = 5.555;
+function defineDataType($value = NULL)
+{
+    switch (gettype($value)) {
+        case "integer":
+            echo "Переданно тип данных: integer";
+            break;
+        case "boolean":
+            echo "Переданно тип данных: boolean";
+            break;
+        case "float":
+            echo "Переданно тип данных: float";
+            break;
+        case "string":
+            echo "Переданно тип данных: string";
+            break;
+        case "array":
+            echo "Переданно тип данных: array";
+            break;
+        case "object":
+            echo "Переданно тип данных: object";
+            break;
+        case "resource":
+            echo "Переданно тип данных: resource";
+            break;
+        case "NULL":
+            echo "Ничего не передано или NULL";
+            break;
+    }
+}
 
-    echo 'Переместить первые 4 элемента массива в конец массива. ';
-    $elements = array_splice($arr, 0, 4);
-    array_push($arr, ...$elements);
-    echo 'Ответ: ' . var_export($arr) . "\r\n";
+defineDataType($value);
+echo "\r\n";
 
-    echo 'Получить сумму 4,5,6 элемента. ';
-    $elements1 = array_slice($arr, 3, 3);
-    echo 'Ответ: ' . array_sum($elements1) . "\r\n";
+//Создать функцию которая считает все буквы b в переданной строке, в случае если передается не строка функция должна возвращать false
+$string = 'lsdjfdshcslcjasbdbsnbsadab';
+function charCounter($string)
+{
+    if (gettype($string) === 'string') {
+        $counter = substr_count($string, 'b');
+        echo "In the string $counter char b" . "\r\n";
+        return $counter;
+    } else {
+        echo 'Not string' . "\r\n";
+        return false;
+    }
+}
 
-    $firstArr = [
-        'one' => 1,
-        'two' => 2,
-        'three' => 3,
-        'four' => 5,
-        'five' => 12,
-    ];
-    $secondArr = [
+charCounter($string);
+
+//Создать функцию которая считает сумму значений всех элементов массива произвольной глубины
+$array = [
+    'one' => 1,
+    'two' => [
         'one' => 1,
         'seven' => 22,
         'three' => 32,
-        'four' => 5,
-        'five' => 13,
-        'six' => 37,
-    ];
+    ],
 
-    echo 'Найти все элементы которые отсутствуют в первом массиве и присутствуют во втором. ' . 'Ответ: ' .  var_export(array_diff($secondArr, $firstArr)) . "\r\n";
-    echo 'Найти все элементы которые присутствую в первом и отсутствуют во втором. ' . 'Ответ: ' . var_export(array_diff($firstArr, $secondArr)) . "\r\n";
-    echo 'Найти все элементы значения которых совпадают. ' . 'Ответ: ' . var_export(array_intersect($firstArr, $secondArr)) . "\r\n";
-
-    echo 'Найти все элементы значения которых отличается. ';
-    $diff1 = array_diff($secondArr, $firstArr);
-    $diff2 = array_diff($firstArr, $secondArr);
-    $diff = $diff1 + $diff2;
-    echo 'Ответ: '. var_export($diff) . "\r\n";
-
-    $array = [
+    'three' => [
         'one' => 1,
-        'two' => [
-            'one' => 1,
-            'seven' => 22,
-            'three' => 32,
-        ],
+        'two' => 2,
+    ],
 
-        'three' => [
-            'one' => 1,
-            'two' => 2,
-        ],
-
+    'four' => 5,
+    'five' => [
+        'three' => 32,
         'four' => 5,
-        'five' => [
-            'three' => 32,
-            'four' => 5,
-            'five' => 12,
-        ],
-    ];
+        'five' => 12,
+    ],
+];
 
-    echo 'Получить все вторые элементы вложенных массивов' . 'Ответ: ' ;
-    $elementsArray = [];
-    foreach ($array as $key => $value) {
-        if (is_array($array[$key]) and array_key_exists('two', $array[$key])) {
-            echo $value['two'] . "\r\n";
-        }
-    };
-
-    echo 'Получить общее количество элементов в массиве. ' . 'Ответ: ' . count($array, COUNT_RECURSIVE ) . "\r\n";
-
-    echo 'Получить сумму всех значений в массиве. ';
+function sumArray($array)
+{
     $totalSum = 0;
-    foreach ($array as $key => $value) {
-        if (is_array($array[$key])) {
-           $totalSum += array_sum($array[$key]);
-        } else {
-            $totalSum += $value;
-        }
-    };
-    echo  'Ответ: ' . $totalSum;
+    array_walk_recursive($array, function ($value, $key) use (&$totalSum) {
+        $totalSum += $value;
+    }, $totalSum);
+    echo "sumArray : $totalSum" . "\r\n";
+}
+
+sumArray($array);
+
+//Создать функцию которая определит сколько квадратов меньшего размера можно вписать в квадрат большего размера размер возвращать в float
+function square($main, $inner)
+{
+    $count = intdiv($main, $inner);
+    $integer = pow($count, 2);
+    $fraction = ($main % $count) / $count;
+    if ($fraction === 0) {
+        echo "В квадрат размером $main можно вписать квадрат размером $inner - $integer раз(а)";
+    } else {
+        echo "В квадрат размером $main можно вписать квадрат размером $inner - $integer раз(а) и $count раз(а) по $fraction";
+    }
+}
+
+square(11, 3);
 ?>
