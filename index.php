@@ -1,102 +1,200 @@
 <?php
-<?php
-//Создать функцию определяющую какой тип данных ей передан и выводящей соответствующее сообщение, если данные не переданы то вывести соответствующее сообщение.
-
-$value = 5.555;
-function defineDataType($value = NULL)
+class Foo
 {
-    switch (gettype($value)) {
-        case "integer":
-            echo "Переданно тип данных: integer";
-            break;
-        case "boolean":
-            echo "Переданно тип данных: boolean";
-            break;
-        case "float":
-            echo "Переданно тип данных: float";
-            break;
-        case "string":
-            echo "Переданно тип данных: string";
-            break;
-        case "array":
-            echo "Переданно тип данных: array";
-            break;
-        case "object":
-            echo "Переданно тип данных: object";
-            break;
-        case "resource":
-            echo "Переданно тип данных: resource";
-            break;
-        case "NULL":
-            echo "Ничего не передано или NULL";
-            break;
+    protected $fooMin = 25;
+
+    protected $fooMax = 350;
+
+    public function getMin()
+    {
+        return $this->fooMin;
+    }
+
+    public function setMin($value)
+    {
+        $this->fooMin = $value;
+    }
+
+    public function getMax()
+    {
+        return $this->fooMax;
+    }
+
+    public function setMax($value)
+    {
+        $this->fooMax = $value;
     }
 }
 
-defineDataType($value);
-echo "\r\n";
-
-//Создать функцию которая считает все буквы b в переданной строке, в случае если передается не строка функция должна возвращать false
-$string = 'lsdjfdshcslcjasbdbsnbsadab';
-function charCounter($string)
+class Bar extends Foo
 {
-    if (gettype($string) === 'string') {
-        $counter = substr_count($string, 'b');
-        echo "In the string $counter char b" . "\r\n";
-        return $counter;
-    } else {
-        echo 'Not string' . "\r\n";
-        return false;
+    protected $bar = 55;
+
+    public function getBar()
+    {
+        return $this->bar;
+    }
+
+    public function setBar($value)
+    {
+        $this->bar = $value;
+    }
+
+    public function totalSum()
+    {
+        return $this->bar + $this->fooMin + $this->fooMax;
     }
 }
 
-charCounter($string);
-
-//Создать функцию которая считает сумму значений всех элементов массива произвольной глубины
-$array = [
-    'one' => 1,
-    'two' => [
-        'one' => 1,
-        'seven' => 22,
-        'three' => 32,
-    ],
-
-    'three' => [
-        'one' => 1,
-        'two' => 2,
-    ],
-
-    'four' => 5,
-    'five' => [
-        'three' => 32,
-        'four' => 5,
-        'five' => 12,
-    ],
-];
-
-function sumArray($array)
+abstract class Bar1 extends Foo
 {
-    $totalSum = 0;
-    array_walk_recursive($array, function ($value, $key) use (&$totalSum) {
-        $totalSum += $value;
-    }, $totalSum);
-    echo "sumArray : $totalSum" . "\r\n";
+    protected $bar1 = 95;
+
+    public function getBar1()
+    {
+        return $this->bar1;
+    }
+
+    public function setBar1($value)
+    {
+        $this->bar1 = $value;
+    }
+
+    public function totalDivision()
+    {
+        return $this->bar1 / $this->fooMin / $this->fooMax;
+    }
+
+    abstract protected function powNumber($exponent);
 }
 
-sumArray($array);
-
-//Создать функцию которая определит сколько квадратов меньшего размера можно вписать в квадрат большего размера размер возвращать в float
-function square($main, $inner)
+final class Bar2 extends Foo
 {
-    $count = intdiv($main, $inner);
-    $integer = pow($count, 2);
-    $fraction = ($main % $count) / $count;
-    if ($fraction === 0) {
-        echo "В квадрат размером $main можно вписать квадрат размером $inner - $integer раз(а)";
-    } else {
-        echo "В квадрат размером $main можно вписать квадрат размером $inner - $integer раз(а) и $count раз(а) по $fraction";
+    protected $bar2 = 45;
+
+    public function getBar2()
+    {
+        return $this->bar2;
+    }
+
+    public function setBar2($value)
+    {
+        $this->bar2 = $value;
+    }
+
+    public function totalMultiplication()
+    {
+        return $this->bar2 * $this->fooMin * $this->fooMax;
     }
 }
 
-square(11, 3);
+class Baz1 extends Bar
+{
+    protected $baz1 = 70;
+
+    public function getBaz1()
+    {
+        return $this->baz1;
+    }
+
+    public function setBaz1($value)
+    {
+        $this->baz1 = $value;
+    }
+
+    public function parentSum()
+    {
+        return $this->bar + $this->baz1;
+    }
+
+    public function rootSum()
+    {
+        return $this->fooMin + $this->baz1;
+    }
+}
+
+class Baz2 extends Bar
+{
+    protected $baz2 = 70;
+
+    public function getBaz2()
+    {
+        return $this->baz2;
+    }
+
+    public function setBaz2($value)
+    {
+        $this->baz2 = $value;
+    }
+
+    public function parentDeduct()
+    {
+        return $this->baz2 - $this->bar;
+    }
+
+    public function rootDeduct()
+    {
+        return $this->fooMax - $this->baz2;
+    }
+}
+
+class Baz11 extends Bar1
+{
+    protected $baz11 = 70;
+
+    public function getBaz11()
+    {
+        return $this->baz11;
+    }
+
+    public function setBaz11($value)
+    {
+        $this->baz11 = $value;
+    }
+
+    public function parentSum()
+    {
+        return $this->bar1 + $this->baz11;
+    }
+
+    public function rootSum()
+    {
+        return $this->fooMax + $this->baz11;
+    }
+
+    public function powNumber($exponent)
+    {
+        return pow($this->baz11, $exponent);
+    }
+}
+
+class Baz12 extends Bar1
+{
+    protected $baz12 = 137;
+
+    public function getBaz12()
+    {
+        return $this->baz12;
+    }
+
+    public function setBaz12($value)
+    {
+        $this->baz12 = $value;
+    }
+
+    public function parentDeduct()
+    {
+        return $this->bar1 - $this->baz12;
+    }
+
+    public function rootDeduct()
+    {
+        return $this->fooMax - $this->baz12;
+    }
+
+    public function powNumber($exponent)
+    {
+        return pow($this->baz12, $exponent);
+    }
+}
 ?>
